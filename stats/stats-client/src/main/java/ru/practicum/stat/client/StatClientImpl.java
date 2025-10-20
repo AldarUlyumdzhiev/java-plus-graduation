@@ -1,21 +1,20 @@
-package ru.practicum.stat.client;
+package ru.practicum.stats.client;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.practicum.stat.dto.EndpointHitCreate;
-import ru.practicum.stat.dto.ViewStats;
+import ru.practicum.stats.dto.EndpointHitCreate;
+import ru.practicum.stats.dto.ViewStats;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @Slf4j
 public class StatClientImpl implements StatClient {
     private final RestClient client;
