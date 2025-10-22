@@ -1,14 +1,21 @@
 package ru.practicum.users.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class GetUserEventsDto {
-    private Long userId;
-    private int from;
-    private int size;
+
+    Long userId;
+
+    int from;
+
+    int size;
+
 }

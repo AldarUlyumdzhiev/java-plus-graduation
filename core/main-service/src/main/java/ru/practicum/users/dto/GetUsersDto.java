@@ -1,19 +1,22 @@
 package ru.practicum.users.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class GetUsersDto {
 
-    private List<Long> ids;
+    List<Long> ids;
 
-    private int from;
+    int from;
 
-    private int size;
+    int size;
 }

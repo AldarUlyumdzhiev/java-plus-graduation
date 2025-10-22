@@ -1,9 +1,7 @@
 package ru.practicum.comments.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.comments.model.CommentsStatus;
 
 import java.time.LocalDateTime;
@@ -12,18 +10,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommentEconomDto {
 
-    private Long id;
+    Long id;
 
-    private Long userId;
+    Long userId;
 
-    private Long eventId;
+    Long eventId;
 
-    private String text;
+    String text;
 
-    private LocalDateTime created;
+    LocalDateTime created;
 
-    private CommentsStatus status;
+    CommentsStatus status;
 
 }

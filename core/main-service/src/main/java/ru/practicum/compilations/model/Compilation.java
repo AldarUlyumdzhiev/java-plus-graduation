@@ -13,13 +13,17 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Compilation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
+
     @ElementCollection
     @CollectionTable(name = "compilation_events", joinColumns = @JoinColumn(name = "compilation_id"))
     @Column(name = "event_id")
-    private Set<Long> events;
-    private Boolean pinned;
-    private String title;
+    Set<Long> events;
+
+    Boolean pinned;
+
+    String title;
 }

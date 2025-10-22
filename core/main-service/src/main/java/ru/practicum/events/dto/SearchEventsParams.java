@@ -1,9 +1,7 @@
 package ru.practicum.events.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -11,24 +9,25 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SearchEventsParams {
 
-    private String text;
+    String text;
 
-    private List<Long> categories;
+    List<Long> categories;
 
-    private Boolean paid;
+    Boolean paid;
 
-    private String rangeStart;
+    String rangeStart;
 
-    private String rangeEnd;
+    String rangeEnd;
 
-    private Boolean onlyAvailable;
+    Boolean onlyAvailable;
 
-    private String sort;
+    String sort;
 
-    private int from;
+    int from;
 
-    private int size;
+    int size;
 
 }

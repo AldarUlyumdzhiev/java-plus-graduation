@@ -2,20 +2,23 @@ package ru.practicum.category.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryDto {
 
-    private Long id;
+    Long id;
 
     @NotBlank(message = "Category name must not be blank")
     @Size(max = 50, message = "Category name length must be <= 50")
-    private String name;
+    String name;
 }

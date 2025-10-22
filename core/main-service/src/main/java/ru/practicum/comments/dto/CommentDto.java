@@ -1,10 +1,8 @@
 package ru.practicum.comments.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.comments.model.CommentsStatus;
 
 import java.time.LocalDateTime;
@@ -13,18 +11,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommentDto {
-    private Long id;
 
-    private Long userId;
+    Long id;
 
-    private Long eventId;
+    Long userId;
+
+    Long eventId;
 
     @NotBlank
-    private String text;
+    String text;
 
-    private LocalDateTime created;
+    LocalDateTime created;
 
-    private CommentsStatus status;
+    CommentsStatus status;
 
 }

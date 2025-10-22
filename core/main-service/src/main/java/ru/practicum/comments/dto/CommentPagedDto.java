@@ -1,16 +1,23 @@
 package ru.practicum.comments.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommentPagedDto {
-    private List<CommentOutputDto> comments;
-    private int page;
-    private int total;
+
+    List<CommentOutputDto> comments;
+
+    int page;
+
+    int total;
+
 }

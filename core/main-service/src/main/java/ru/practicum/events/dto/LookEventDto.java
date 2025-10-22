@@ -1,20 +1,19 @@
 package ru.practicum.events.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LookEventDto {
 
-    private Long id;
+    Long id;
 
-    private String uri;
+    String uri;
 
-    private String ip;
+    String ip;
 
 }
