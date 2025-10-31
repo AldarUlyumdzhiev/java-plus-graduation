@@ -28,6 +28,9 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class PublicEventServiceImpl implements PublicEventService {
 
+    private static final LocalDateTime DEFAULT_START = LocalDateTime.of(1970, 1, 1, 1, 1, 1);
+    private static final LocalDateTime DEFAULT_END   = LocalDateTime.of(3000, 1, 1, 1, 1, 1);
+
     private final EventRepository eventRepository;
     private final EventMappingService eventMapper;
     private final AdminRequestsClient adminRequestsClient;
@@ -98,7 +101,7 @@ public class PublicEventServiceImpl implements PublicEventService {
 
         EventFullDto eventFullDto = eventMapper.toFullDto(event);
 
-        countViews(List.of(eventFullDto));
+        countViews(eventFullDto);
 
         return eventFullDto;
     }
@@ -106,12 +109,8 @@ public class PublicEventServiceImpl implements PublicEventService {
     public void countViews(List<? extends EventViews> events, LocalDateTime dateStart, LocalDateTime dateEnd, boolean unique) {
         if (events.isEmpty()) return;
 
-        if (Objects.isNull(dateStart)) {
-            dateStart = LocalDateTime.of(1970, 1, 1, 1, 1, 1);
-        }
-        if (Objects.isNull(dateEnd)) {
-            dateEnd = LocalDateTime.of(3000, 1, 1, 1, 1, 1);
-        }
+        if (Objects.isNull(dateStart)) dateStart = DEFAULT_START;
+        if (Objects.isNull(dateEnd))   dateEnd   = DEFAULT_END;
 
         List<String> uris = events.stream().map(e -> "/events/" + e.getId()).toList();
         List<ReadEndpointHitDto> hits = statsClient.getStats(dateStart, dateEnd, uris, unique);
@@ -119,7 +118,7 @@ public class PublicEventServiceImpl implements PublicEventService {
         Map<Long, Long> workMap = new HashMap<>();
         for (ReadEndpointHitDto r : hits) {
             String decoded = r.getUri();
-            long i = Long.parseLong(decoded.substring(decoded.lastIndexOf("/") + 1));
+            long i = Long.parseLong(decoded.substring(decoded.lastIndexOf('/') + 1));
             workMap.put(i, (long) r.getHits());
         }
 
@@ -130,5 +129,36 @@ public class PublicEventServiceImpl implements PublicEventService {
 
     public void countViews(List<? extends EventViews> events) {
         countViews(events, null, null, true);
+    }
+
+    public void countViews(EventViews event, LocalDateTime dateStart, LocalDateTime dateEnd, boolean unique) {
+        if (event == null) return;
+
+        if (Objects.isNull(dateStart)) dateStart = DEFAULT_START;
+        if (Objects.isNull(dateEnd))   dateEnd   = DEFAULT_END;
+
+        List<String> uris = Collections.singletonList("/events/" + event.getId());
+        List<ReadEndpointHitDto> hits = statsClient.getStats(dateStart, dateEnd, uris, unique);
+
+        long views = hits.stream()
+                .filter(h -> {
+                    String uri = h.getUri();
+                    int idx = uri.lastIndexOf('/');
+                    if (idx == -1) return false;
+                    try {
+                        return Long.parseLong(uri.substring(idx + 1)) == event.getId();
+                    } catch (NumberFormatException ex) {
+                        return false;
+                    }
+                })
+                .mapToLong(h -> (long) h.getHits())
+                .findFirst()
+                .orElse(0L);
+
+        event.setViews(views);
+    }
+
+    public void countViews(EventViews event) {
+        countViews(event, null, null, true);
     }
 }
