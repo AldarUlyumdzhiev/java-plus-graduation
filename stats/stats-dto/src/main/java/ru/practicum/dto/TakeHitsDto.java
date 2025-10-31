@@ -1,9 +1,7 @@
 package ru.practicum.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,13 +10,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TakeHitsDto {
 
-    private LocalDateTime start;
+    LocalDateTime start;
 
-    private LocalDateTime end;
+    LocalDateTime end;
 
-    private List<String> uris;
+    List<String> uris;
 
-    private boolean unique;
+    boolean unique;
 }
