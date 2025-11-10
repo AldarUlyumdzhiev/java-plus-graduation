@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class EventFullDto implements EventViews {
+@FieldDefaults(level= AccessLevel.PRIVATE)
+public class EventFullDto implements EventRating {
 
     Long id;
 
@@ -48,7 +48,7 @@ public class EventFullDto implements EventViews {
 
     Long confirmedRequests;
 
-    Long views;
+    Double rating;
 
     LocationDto location;
 

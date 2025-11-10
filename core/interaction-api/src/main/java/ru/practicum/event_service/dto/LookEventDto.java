@@ -7,13 +7,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class LookEventDto {
 
-    Long id;
+    private Long id;
 
-    String uri;
+    private String uri;
 
-    String ip;
+    private String ip;
 
 }

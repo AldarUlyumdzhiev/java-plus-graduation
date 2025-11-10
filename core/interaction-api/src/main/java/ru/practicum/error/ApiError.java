@@ -1,17 +1,20 @@
 package ru.practicum.error;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @Data
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class ApiError {
-    private String name;
-    private String url;
-    private String reason;
-    private Integer status;
-    private String message;
-    private LocalDateTime timestamp;
+    String name;
+    String url;
+    String reason;
+    Integer status;
+    String message;
+    LocalDateTime timestamp;
 
     public ApiError(String name, String url, Integer status, String reason, Throwable ex) {
         this.name = name;

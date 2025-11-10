@@ -9,10 +9,10 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class NewCategoryDto {
 
     @NotBlank
-    @Size(max = 50)
+    @Size(min = 1, max = 50)
     String name;
 }
