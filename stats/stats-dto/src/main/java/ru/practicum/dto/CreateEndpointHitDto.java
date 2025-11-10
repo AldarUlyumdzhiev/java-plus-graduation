@@ -1,9 +1,8 @@
 package ru.practicum.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.config.DateConfig;
 import ru.practicum.validation.CreateEndpointHitDtoValidation;
 
@@ -12,10 +11,16 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateEndpointHitDto implements CreateEndpointHitDtoValidation {
-    private String app;
-    private String uri;
-    private String ip;
+
+    String app;
+
+    String uri;
+
+    String ip;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateConfig.FORMAT)
-    private LocalDateTime timestamp;
+    LocalDateTime timestamp;
 }
