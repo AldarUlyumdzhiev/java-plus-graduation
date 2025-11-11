@@ -69,21 +69,28 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     public EventFullDto getUserEvent(Long userId, Long eventId) {
         UserShortDto userDto = userDtoMapper.toShortDto(getUserById(userId));
         Event event = eventRepository.findByIdAndInitiator(eventId, userId)
-                .orElseThrow(() -> new NotFoundException("Event not found for userId=" + userId + ", eventId=" + eventId));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Event not found for userId=%d, eventId=%d", userId, eventId)
+                ));
         return eventMapper.toFullDto(event, userDto, null, null);
     }
 
     @Override
     public EventFullDto updateUserEvent(Long userId, Long eventId, UpdateEventUserRequest request) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new NotFoundException("Event not found with id: " + eventId));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Event not found with id: %d", eventId)
+                ));
 
         UserShortDto userDto = userDtoMapper.toShortDto(getUserById(userId));
 
-        if (!Objects.equals(event.getInitiator(), userId))
+        if (!Objects.equals(event.getInitiator(), userId)) {
             throw new ForbiddenActionException("User is not the event creator");
-        if (Objects.equals(event.getState(), EventState.PUBLISHED))
+        }
+
+        if (Objects.equals(event.getState(), EventState.PUBLISHED)) {
             throw new ForbiddenActionException("Changing of published event is forbidden.");
+        }
 
         Optional.ofNullable(request.getTitle()).ifPresent(event::setTitle);
         Optional.ofNullable(request.getAnnotation()).ifPresent(event::setAnnotation);
@@ -95,7 +102,9 @@ public class PrivateEventServiceImpl implements PrivateEventService {
 
         if (Objects.nonNull(request.getCategory())) {
             Category category = categoryRepository.findById(request.getCategory())
-                    .orElseThrow(() -> new NotFoundException("Category not found with id: " + request.getCategory()));
+                    .orElseThrow(() -> new NotFoundException(
+                            String.format("Category not found with id: %d", request.getCategory())
+                    ));
             event.setCategory(category);
         }
 
@@ -112,7 +121,9 @@ public class PrivateEventServiceImpl implements PrivateEventService {
                     event.setState(EventState.PENDING);
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid state action: " + request.getStateAction());
+                    throw new IllegalArgumentException(
+                            String.format("Invalid state action: %s", request.getStateAction())
+                    );
             }
         }
 
@@ -126,7 +137,9 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         try {
             return adminUsersClient.getUser(userId);
         } catch (Exception e) {
-            throw new NotFoundException("User with id " + userId + " not found");
+            throw new NotFoundException(
+                    String.format("User with id %d not found", userId)
+            );
         }
     }
 }

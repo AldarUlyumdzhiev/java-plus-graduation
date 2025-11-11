@@ -54,9 +54,7 @@ public class AdminEventServiceImpl implements AdminEventService {
     @Override
     public EventFullDto updateEvent(Long eventId, UpdateEventAdminRequest request) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> {
-                    return new NotFoundException("Event not found with id: " + eventId);
-                });
+                .orElseThrow(() -> new NotFoundException(String.format("Event not found with id: %d", eventId)));
 
         // Обновляем поля
         if (request.getTitle() != null) {
@@ -88,9 +86,7 @@ public class AdminEventServiceImpl implements AdminEventService {
 
         if (request.getCategory() != null) {
             Category category = categoryRepository.findById(request.getCategory())
-                    .orElseThrow(() -> {
-                        return new NotFoundException("Category not found with id: " + request.getCategory());
-                    });
+                    .orElseThrow(() -> new NotFoundException(String.format("Category not found with id: %d", request.getCategory())));
             event.setCategory(category);
         }
 

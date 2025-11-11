@@ -69,6 +69,6 @@ public class ExceptionController {
     }
 
     private String getRequestUrl(HttpServletRequest request) {
-        return request.getMethod() + " " + request.getRequestURL().toString();
+        return String.format("%s %s", request.getMethod(), request.getRequestURL());
     }
 }

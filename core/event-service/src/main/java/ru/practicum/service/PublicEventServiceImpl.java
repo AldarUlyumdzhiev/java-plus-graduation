@@ -94,7 +94,9 @@ public class PublicEventServiceImpl implements PublicEventService {
     @Override
     public EventFullDto getEventById(Long eventId, Long userId) {
         Event event = eventRepository.findByIdAndState(eventId, EventState.PUBLISHED)
-                .orElseThrow(() -> new NotFoundException("Published event not found with id: " + eventId));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Published event not found with id: %d", eventId)
+                ));
 
         EventFullDto eventFullDto = eventMapper.toFullDto(event);
         eventFullDto.setRating(getEventRating(eventId));

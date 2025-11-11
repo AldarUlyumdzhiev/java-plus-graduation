@@ -29,7 +29,9 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
     @Override
     public CompilationDto updateCompilation(Long id, UpdateCompilationRequest dto) {
         Compilation compilation = compilationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Compilation not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Compilation not found with id: %d", id)
+                ));
 
         if (dto.getTitle() != null) {
             compilation.setTitle(dto.getTitle());
@@ -49,7 +51,7 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
     @Override
     public void deleteCompilation(Long id) {
         if (!compilationRepository.existsById(id)) {
-            throw new NotFoundException("Compilation not found with id: " + id);
+            throw new NotFoundException(String.format("Compilation not found with id: %d", id));
         }
         compilationRepository.deleteById(id);
     }

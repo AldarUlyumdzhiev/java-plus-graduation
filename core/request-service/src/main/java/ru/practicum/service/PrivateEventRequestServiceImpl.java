@@ -148,7 +148,7 @@ public class PrivateEventRequestServiceImpl implements PrivateEventRequestServic
             return eventsClient.getById(eventId, userId);
         } catch (FeignException ex) {
             if (ex.status() == 404) {
-                throw new ForbiddenActionException("Event not found with id " + eventId);
+                throw new ForbiddenActionException(String.format("Event not found with id: %d", eventId));
             } else {
                 throw ex;
             }

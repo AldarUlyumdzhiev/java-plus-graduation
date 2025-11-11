@@ -25,7 +25,9 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public CategoryDto updateCategory(Long id, CategoryDto dto) {
         Category existing = categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Category not found with id: %d", id)
+                ));
         existing.setName(dto.getName());
         return categoryMapper.toDto(categoryRepository.save(existing));
     }
@@ -33,7 +35,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public void deleteCategory(Long id) {
         if (!categoryRepository.existsById(id)) {
-            throw new NotFoundException("Category not found with id: " + id);
+            throw new NotFoundException(String.format("Category not found with id: %d", id));
         }
         categoryRepository.deleteById(id);
     }
