@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class NewCompilationDto {
 
     List<@NotNull Long> events;
@@ -19,6 +19,6 @@ public class NewCompilationDto {
     Boolean pinned;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(min = 1, max = 50)
     String title;
 }

@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Category {
 
     @Id

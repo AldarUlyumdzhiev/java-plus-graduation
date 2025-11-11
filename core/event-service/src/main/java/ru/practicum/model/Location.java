@@ -12,15 +12,13 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
     float lat;
-
     float lon;
 
 }

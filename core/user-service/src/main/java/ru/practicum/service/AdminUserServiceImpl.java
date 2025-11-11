@@ -36,7 +36,9 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Transactional(readOnly = true)
     public UserDto getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("User not found with id: " + userId));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("User not found with id: %d", userId)
+                ));
         return userMapper.toDto(user);
     }
 
@@ -49,7 +51,9 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("User not found with id: " + userId);
+            throw new NotFoundException(
+                    String.format("User not found with id: %d", userId)
+            );
         }
         userRepository.deleteById(userId);
     }

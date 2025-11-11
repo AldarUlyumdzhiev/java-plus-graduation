@@ -27,7 +27,9 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public Event save(NewEventDto dto, UserDto userDto) {
         Category category = categoryRepository.findById(dto.getCategory())
-                .orElseThrow(() -> new NotFoundException("Category not found with id: " + dto.getCategory()));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Category not found with id: %d", dto.getCategory())
+                ));
 
         Location location = new Location();
         location.setLat(dto.getLocation().getLat());
